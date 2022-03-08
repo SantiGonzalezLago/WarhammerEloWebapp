@@ -56,6 +56,7 @@
 							<?php if ($userdata['admin']) : ?>
 								<li class="nav-item"><a class="nav-link" href="<?= base_url('/games/add') ?>">Añadir partida</a></li>
 							<?php endif; ?>
+							<li class="nav-item"><a class="nav-link" href="https://github.com/SantiGonzalezLago/WarhammerEloWebapp/issues" target="_blank">Sugerencias</a></li>
 						</ul>
 
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
