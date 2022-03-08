@@ -25,13 +25,17 @@
 
 	<link rel="shortcut icon" type="image/png" href="<?= base_url('/favicon.ico') ?>"/>
 
-	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
-	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/main.css') ?>">
-
 	<script type="text/javascript" src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/assets/js/jquery-ui.min.js') ?>"></script>
+
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
 	<script type="text/javascript" src="<?= base_url('/assets/js/bootstrap.bundle.min.js') ?>"></script>
+
+	<link rel="stylesheet" href="<?= base_url('/assets/css/select2.min.css') ?>" />
+	<script type="text/javascript" src="<?= base_url('/assets/js/select2.min.js') ?>"></script>
+
 	<script type="text/javascript" src="<?= base_url('/assets/js/main.js') ?>"></script>
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/main.css') ?>">
 </head>
 
 <body>

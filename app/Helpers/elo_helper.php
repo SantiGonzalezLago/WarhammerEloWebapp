@@ -16,39 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace App\Models;  
-use CodeIgniter\Model;
-
-  
-class GameModel extends Model {
-
-	protected $table = 'game';
-	protected $primaryKey = 'id';
-
-	protected $allowedFields = [
-		'id',
-		'title',
-		'description',
-		'player1_id',
-		'player2_id',
-		'result',
-		'player1_elo_after',
-		'player2_elo_after',
-		'date',
-	];
-
-	public function insertGame($title, $description, $player1, $player2, $result, $elo1, $elo2) {
-		$this->db->table('game')->insert(array(
-			'title' => $title,
-			'description' => $description,
-			'player1_id' => $player1,
-			'player2_id' => $player2,
-			'result' => $result,
-			'player1_elo_after' => $elo1,
-			'player2_elo_after' => $elo2,
-		));
-
-		return $this->db->affectedRows();
-	}
-
+function calculateNewRating($currentRating, $opponentRating, $result) {
+    $expectedScore = 1 / ( 1 + ( pow( 10 , ( $opponentRating - $currentRating ) / 400 ) ) );
+    $newRating = $currentRating + ( K_FACTOR * ( $result - $expectedScore ) );
+    return $newRating;
 }
