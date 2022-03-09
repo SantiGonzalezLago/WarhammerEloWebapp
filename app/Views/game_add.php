@@ -21,23 +21,29 @@
     <div class="form-group mb-3">
 		<input type="text" class="form-control" id="title" name="title" placeholder="Título" required>
 	</div>
-    <div class="form-group row g-0 input-group mb-3">
-        <select class="form-control select2" name="player1" id="player1">
-            <?php foreach ($players as $player) : ?>
-                <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
-            <?php endforeach; ?>
-        </select>
-        <select class="form-control" name="result" id="result">
-            <option selected>Por finalizar</option>
-            <option value="1-0">1-0</option>
-            <option value="0-1">0-1</option>
-            <option value="TIE">&half;-&half;</option>
-        </select>
-        <select class="form-control select2" name="player2" id="player2">
-            <?php foreach ($players as $player) : ?>
-                <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
-            <?php endforeach; ?>
-        </select>
+    <div class="form-group row input-group mb-3">
+        <div class="col-5">
+            <select class="form-control select2" name="player1" id="player1">
+                <?php foreach ($players as $player) : ?>
+                    <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-2">
+            <select class="form-control" name="result" id="result">
+                <option selected>Por finalizar</option>
+                <option value="1-0">1-0</option>
+                <option value="0-1">0-1</option>
+                <option value="TIE">&half;-&half;</option>
+            </select>
+        </div>
+        <div class="col-5">
+            <select class="form-control select2" name="player2" id="player2">
+                <?php foreach ($players as $player) : ?>
+                    <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
     <div class="form-group mb-3">
         <textarea class="form-control" name="description" id="description" rows="5" placeholder="Descripción (opcional)"></textarea>

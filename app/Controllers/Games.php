@@ -22,11 +22,23 @@ class Games extends BaseController
 {
 
     public function index() {
-        
+        $games = $this->gameModel->getGames();
+
+        $this->setData('games', $games);
+        $this->setTitle("Partidas");
+        return $this->loadView('games_list');
     }
 
     public function view($id) {
-        
+        $game = $this->gameModel->getGame($id);
+
+        if (!$game) {
+            return redirect()->to('/games');
+        }
+
+        $this->setData('game', $game);
+        $this->setTitle($game['title']);
+        return $this->loadView('game_view');
     }
 
     public function add() {

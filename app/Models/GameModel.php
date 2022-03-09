@@ -37,6 +37,18 @@ class GameModel extends Model {
 		'date',
 	];
 
+	public function getGames() {
+		$query = $this->db->table('game')->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name')
+			->orderBy('date', 'DESC')->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id');
+		return $query->get()->getResultArray();
+	}
+
+	public function getGame($id) {
+		$query = $this->db->table('game')->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name')->where('game.id', $id)
+			->orderBy('date', 'DESC')->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id');
+		return $query->get()->getResultArray()[0];
+	}
+
 	public function insertGame($title, $description, $player1, $player2, $result, $elo1, $elo2) {
 		$this->db->table('game')->insert(array(
 			'title' => $title,
