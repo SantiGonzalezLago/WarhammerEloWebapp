@@ -95,6 +95,10 @@ class BaseController extends Controller
 		return (bool) session('id');
 	}
 
+	protected function isAdmin() {
+		return $this->getUserData()['admin'];
+	}
+
 	protected function getUserData() {
 		if (isset($this->data['userdata'])) {
 			return $this->data['userdata'];

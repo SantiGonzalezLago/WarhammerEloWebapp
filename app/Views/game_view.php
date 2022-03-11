@@ -17,6 +17,16 @@
 ?>
 
 <table class="table">
-    <?= var_dump($game) ?> <!-- TODO -->
+    <tr>
+        <th colspan="3"><?= $game['title'] ?></th>
+    </tr>
+    <tr>
+        <td><?= $game['player1_name'] ?></td>
+        <td><?= $game['result'] == "TIE" ? "&half;-&half;" : $game['result'] ?></td>
+        <td><?= $game['player2_name'] ?></td>
+    </tr>
+    <tr>
+        <td colspan="3" class="<?= $game['description'] == "" ? "text-muted" : "" ?>"><?= $game['description'] == "" ? "Sin descripción" : $game['description']?></td>
+    </tr>
 </table>
 <a href="<?= base_url('/games') ?>" class="btn btn-outline-secondary float-end">Volver a Partidas</a>

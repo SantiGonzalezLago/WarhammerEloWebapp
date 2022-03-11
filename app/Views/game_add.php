@@ -31,7 +31,7 @@
         </div>
         <div class="col-2">
             <select class="form-control" name="result" id="result">
-                <option selected>Por finalizar</option>
+                <option value="" selected>Por finalizar</option>
                 <option value="1-0">1-0</option>
                 <option value="0-1">0-1</option>
                 <option value="TIE">&half;-&half;</option>

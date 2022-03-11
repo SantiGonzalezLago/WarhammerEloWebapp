@@ -22,7 +22,7 @@ class Games extends BaseController
 {
 
     public function index() {
-        $games = $this->gameModel->getGames();
+        $games = $this->isAdmin() ? $this->gameModel->getGames() : $this->gameModel->getFinishedGames();
 
         $this->setData('games', $games);
         $this->setTitle("Partidas");
@@ -71,9 +71,12 @@ class Games extends BaseController
             case 'TIE':
                 $results = array(0.5,0.5);
                 break;
+            default:
+                $result = null;
         }
-        $newElo1 = calculateNewRating($eloPlayer1, $eloPlayer2, $results[0]);
-        $newElo2 = calculateNewRating($eloPlayer2, $eloPlayer1, $results[1]);
+
+        $newElo1 = isset($results) ? calculateNewRating($eloPlayer1, $eloPlayer2, $results[0]) : null;
+        $newElo2 = isset($results) ? calculateNewRating($eloPlayer2, $eloPlayer1, $results[1]) : null;
 
         $this->gameModel->insertGame($title, $description, $player1, $player2, $result, $newElo1, $newElo2);
 
