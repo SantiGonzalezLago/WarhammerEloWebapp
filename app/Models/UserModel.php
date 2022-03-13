@@ -67,5 +67,28 @@ class UserModel extends Model {
 
 		return $this->db->query($query)->getResultArray()[0];
 	}
+	
+	public function checkEmailExists($email) {
+		$user = $this->where('email', $email)->first();
+		return isset($user);
+		
+	}
+
+	public function checkDisplayNameExists($displayName) {
+		$user = $this->where('display_name', $displayName)->first();
+		return isset($user);
+	}
+
+	public function addUser($data) {
+		$this->db->table('user')->insert($data);
+
+		return $this->db->affectedRows();
+	}
+
+	public function changeField($id, $field, $value) {
+		$this->db->table('user')->set($field, $value)->where('id', $id)->update();
+
+		return $this->db->affectedRows();
+	}
 
 }

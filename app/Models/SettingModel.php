@@ -32,6 +32,10 @@ class SettingModel extends Model {
 		'type',
 	];
 
+    public function getSettings() {
+        return $this->db->table('setting')->get()->getResultArray();
+    }
+
     public function getSettingValue($key) {
         $setting =  $this->db->table('setting')->where('key', $key)->get()->getRow();
 
@@ -40,6 +44,12 @@ class SettingModel extends Model {
         } else {
             return null;
         }
+    }
+
+    public function saveSetting($key, $value) {
+        $this->db->table('setting')->set('value', $value)->where('key', $key)->update();
+
+		return $this->db->affectedRows();
     }
 
 }

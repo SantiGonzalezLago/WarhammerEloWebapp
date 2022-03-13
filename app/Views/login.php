@@ -23,9 +23,13 @@
 		<div class="form-group mb-3 alert alert-warning"><?= session()->getFlashdata('login_error') ?></div>
 	<?php endif; ?>
 
+	<?php if(session()->getFlashdata('success')) : ?>
+		<div class="form-group mb-3 alert alert-success"><?= session()->getFlashdata('success') ?></div>
+	<?php endif; ?>
+
 	<div class="form-group mb-3">
 		<label for="email">Email</label>
-		<input type="text" name="email" id="email"  class="form-control" value="<?= session()->getFlashdata('email')?session()->getFlashdata('email'):'' ?>" required />
+		<input type="email" name="email" id="email" class="form-control" value="<?= session()->getFlashdata('email')?session()->getFlashdata('email'):'' ?>" required />
 	</div>
 
 	<div class="form-group mb-3">
@@ -58,19 +62,20 @@
 				<form id="register-form" action="<?= base_url('/login/register') ?>" method="POST">
 					<div class="form-group mb-3">
 						<label for="email">Email</label>
-						<input type="text" name="email" id="email" class="form-control" required />
+						<input type="email" name="email" id="email" class="form-control" required />
 					</div>
 					<div class="form-group mb-3">
 						<label for="password">Contraseña</label>
-						<input type="password" name="password" id="password" class="form-control" required />
+						<input type="password" name="password" id="password" class="form-control pwd-register" required />
 					</div>
 					<div class="form-group mb-3">
-						<label for="repeat_password">Repetir contraseña</label>
-						<input type="password" name="repeat_password" id="repeat_password" class="form-control" required />
+						<label for="repeat-password">Repetir contraseña</label>
+						<input type="password" name="repeat-password" id="repeat-password" class="form-control pwd-register" required />
 					</div>
+					<div id="pwd-not-match" class="form-group mb-3 alert alert-warning">Las contraseñas deben ser iguales</div>
 					<div class="form-group mb-3">
-						<label for="display_name">Nombre</label>
-						<input type="text" name="display_name" id="display_name" class="form-control" required />
+						<label for="display-name">Nombre de usuario</label>
+						<input type="text" name="display-name" id="display-name" class="form-control" required />
 					</div>
 					<div class="form-group mb-3 d-grid">
 						<button type="submit" class="btn btn-primary">Registrarse</button>
@@ -92,7 +97,7 @@
 				<form id="reset-password-form" action="<?= base_url('/login/resetPassword') ?>" method="POST">
 					<div class="form-group mb-3">
 						<label for="email">Email</label>
-						<input type="text" name="email" id="email"  class="form-control" value="<?= session()->getFlashdata('email')?session()->getFlashdata('email'):'' ?>" required />
+						<input type="email" name="email" id="email"  class="form-control" value="<?= session()->getFlashdata('email')?session()->getFlashdata('email'):'' ?>" required />
 					</div>
 					<div class="form-group mb-3 d-grid">
 						<button type="submit" class="btn btn-primary">Reiniciar contraseña</button>

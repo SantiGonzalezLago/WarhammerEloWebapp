@@ -44,7 +44,7 @@ class Login extends BaseController
             return redirect()->to('/');
 
 		} else {
-			session()->setFlashdata('login_error', 'El nombre de usuario no existe o la contrase&ntilde;a no coincide');
+			session()->setFlashdata('login_error', 'El nombre de usuario no existe, la contrase&ntilde;a no coincide o el usuario no est&aacute; activo.');
 			session()->setFlashdata('email', $email);
 
             return redirect()->back();
@@ -62,7 +62,42 @@ class Login extends BaseController
         if (session('id')) {
             return redirect()->to('/');
         }
-        // TODO
+
+        $errorText = "";
+        
+        $email = $this->request->getVar('email');
+		$password = $this->request->getVar('password');
+		$repeatPassword = $this->request->getVar('repeat-password');
+		$displayName = $this->request->getVar('display-name');
+
+        if ($this->userModel->checkEmailExists($email)) {
+            $errorText .= "El email ya est&aacute; en uso<br/>";
+        }
+
+        if ($this->userModel->checkDisplayNameExists($displayName)) {
+            $errorText .= "El nombre de usuario ya est&aacute; en uso<br/>";
+        }
+
+        if ($password != $repeatPassword) {
+            $errorText .= "Las contrase&ntilde;as deben ser iguales<br/>";
+        }
+
+        if (strlen($errorText) > 0) {
+            session()->setFlashdata('login_error', $errorText);
+        } else {
+            $userAutoRegister = $this->settingModel->getSettingValue('user_autoregister');
+
+            session()->setFlashdata('success', 'Se ha creado su cuenta. ' . ($userAutoRegister ? 'Introduzca los datos a continuaci&oacute;n para acceder.' : 'Su registro deber&aacute; ser aceptado por un administrador antes de que pueda acceder.'));
+            
+            $this->userModel->addUser(array(
+                'email' => $email,
+                'password' => password_hash($password, PASSWORD_BCRYPT ),
+                'display_name' => $displayName,
+                'active' => $userAutoRegister,
+            ));
+        }
+
+        return redirect()->back();
     }
 
     public function resetPassword() {

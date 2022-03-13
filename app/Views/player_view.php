@@ -19,7 +19,12 @@
 <table class="table">
     <tr>
         <th>Nombre</th>
-        <td><?= $player['display_name'] ?></td>
+        <td>
+            <?= $player['display_name'] ?>
+            <?php if ($player['id'] == session('id')) : ?>
+                <input type="button" class="btn btn-outline-primary btn-sm float-end"  data-bs-toggle="modal" data-bs-target="#change-display-name-modal" value="Cambiar">
+            <?php endif; ?>
+        </td>
     </tr>
     <tr>
         <th>Elo</th>
@@ -28,8 +33,89 @@
     <?php if ($player['id'] == session('id')) : ?>
         <tr>
             <th>Email</th>
-            <td><?= $player['email'] ?></td>
+            <td>
+                <?= $player['email'] ?>
+                <input type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#change-email-modal" value="Cambiar">
+            </td>
+        </tr>
+        <tr>
+            <th>Contraseña</th>
+            <td>
+                &bull;&bull;&bull;&bull;&bull;&bull;
+                <input type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#change-password-modal" value="Cambiar">
+            </td>
         </tr>
     <?php endif; ?>
 </table>
 <a href="<?= base_url('/players') ?>" class="btn btn-outline-secondary float-end">Volver a Jugadores</a>
+
+<?php if ($player['id'] == session('id')) : ?>
+
+    <div class="modal" id="change-display-name-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar nombre</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+					<div class="form-group mb-3">
+                        <label for="display-name">Nuevo nombre</label>
+                        <input type="text" name="display-name" id="display-name" class="form-control" required />
+                    </div>
+                    <div id="display-name-used" class="in-use form-group mb-3 alert alert-warning">Ese nombre está en uso.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="change-email-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+					<div class="form-group mb-3">
+                        <label for="email">Nuevo email</label>
+                        <input type="email" name="email" id="email" class="form-control" required />
+                    </div>
+                    <div id="email-used" class="in-use form-group mb-3 alert alert-warning">Ese email está en uso.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="change-password-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+					<div class="form-group mb-3">
+                        <label for="password">Nueva contraseña</label>
+                        <input type="password" name="password" id="password" class="form-control pwd-register" required />
+                    </div>
+					<div class="form-group mb-3">
+                        <label for="repeat-password">Repetir contraseña</label>
+                        <input type="password" name="repeat-password" id="repeat-password" class="form-control pwd-register" required />
+                    </div>
+					<div id="pwd-not-match" class="form-group mb-3 alert alert-warning">Las contraseñas deben ser iguales</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>

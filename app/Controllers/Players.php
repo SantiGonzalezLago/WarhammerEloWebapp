@@ -53,4 +53,22 @@ class Players extends BaseController
         $this->setTitle($player['display_name']);
         return $this->loadView('player_view');
     }
+
+    public function changeDisplayNameAjax() {
+        $displayName = $this->request->getVar('displayName');
+        $id = session('id');
+        if ($this->userModel->checkDisplayNameExists($displayName)) {
+            return json_encode(0);
+        }
+        return json_encode($this->userModel->changeField($id, 'display_name', $displayName));
+    }
+
+    public function changeEmailAjax() {
+        $email = $this->request->getVar('email');
+        $id = session('id');
+        if ($this->userModel->checkEmailExists($email)) {
+            return json_encode(0);
+        }
+        return json_encode($this->userModel->changeField($id, 'email', $email));
+    }
 }

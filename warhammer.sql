@@ -131,6 +131,7 @@ ALTER TABLE `setting`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_unique_display_name` (`display_name`);
   ADD UNIQUE KEY `user_unique_email` (`email`);
 
 --

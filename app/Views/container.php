@@ -34,6 +34,10 @@
 	<link rel="stylesheet" href="<?= base_url('/assets/css/select2.min.css') ?>" />
 	<script type="text/javascript" src="<?= base_url('/assets/js/select2.min.js') ?>"></script>
 
+	<script>
+		baseUrl = "<?= base_url() ?>";
+	</script>
+
 	<script type="text/javascript" src="<?= base_url('/assets/js/main.js') ?>"></script>
 	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/main.css') ?>">
 </head>
@@ -55,6 +59,7 @@
 							<li class="nav-item"><a class="nav-link" href="<?= base_url('/games') ?>">Partidas</a></li>
 							<?php if ($userdata['admin']) : ?>
 								<li class="nav-item"><a class="nav-link" href="<?= base_url('/games/add') ?>">Añadir partida</a></li>
+								<li class="nav-item"><a class="nav-link" href="<?= base_url('/admin') ?>">Administración</a></li>
 							<?php endif; ?>
 							<li class="nav-item"><a class="nav-link" href="https://github.com/SantiGonzalezLago/WarhammerEloWebapp/issues" target="_blank">Sugerencias</a></li>
 						</ul>
@@ -66,7 +71,6 @@
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 							<li><a class="dropdown-item" href="<?= base_url('/players/view/' . $userdata['id']) ?>">Perfil</a></li>
-							<li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
 							<li><hr class="dropdown-divider"></li>
 							<li><a class="dropdown-item" href="<?= base_url('/login/logout') ?>">Cerrar Sesión</a></li>
 						</ul>
