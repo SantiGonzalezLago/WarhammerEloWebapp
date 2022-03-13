@@ -71,4 +71,14 @@ class Players extends BaseController
         }
         return json_encode($this->userModel->changeField($id, 'email', $email));
     }
+
+    public function changePasswordAjax() {
+        $password = $this->request->getVar('password');
+        $repeatPassword = $this->request->getVar('repeatPassword');
+        $id = session('id');
+        if ($password != $repeatPassword) {
+            return json_encode(0);
+        }
+        return json_encode($this->userModel->changeField($id, 'password', password_hash($password, PASSWORD_BCRYPT)));
+    }
 }

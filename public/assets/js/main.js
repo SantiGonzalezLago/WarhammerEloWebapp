@@ -49,6 +49,13 @@ $(document).ready(function() {
       }
     });
 
+    $('#reset-form').on('submit', function(e) {
+      if ($('#register-form #password').val() != $('#register-form #repeat-password').val()) {
+        e.preventDefault();
+        $('#pwd-not-match').show();
+      }
+    });
+
     $('.setting-row input').on('change', function() {
        $(this).parent().parent().addClass('table-warning');
        $("#save-settings").attr("disabled", false);
@@ -119,7 +126,27 @@ $(document).ready(function() {
     $('#change-password-modal .btn').on('click', function() {
         let password = $('#change-password-modal #password').val();
         let repeatPassword = $('#change-password-modal #repeat-password').val();
-        console.log(password, repeatPassword);
+        if (password != repeatPassword) {
+            return;
+        }
+
+        $.ajax({
+            method: "POST",
+            url: baseUrl + "/players/changePasswordAjax",
+            dataType:'json',
+            data: {
+                password: password,
+                repeatPassword: repeatPassword
+            },
+            success: function(data) {
+                if (data == 0) {
+                    $('#pwd-not-match').show();
+                } else {
+                    $("#change-password-modal").modal('hide');
+                    $("#password-changed-modal").modal('show');
+                }
+            }  
+        });
     });
 
 });

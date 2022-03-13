@@ -23,7 +23,7 @@ class Encryption extends BaseConfig
      *
      * @var string
      */
-    public $key = '';
+    public $key = 'aBigsecret_ofAtleast32Characters'; // FIXME
 
     /**
      * --------------------------------------------------------------------------

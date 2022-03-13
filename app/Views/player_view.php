@@ -59,7 +59,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-					<div class="form-group mb-3">
+                    <div class="form-group mb-3">
                         <label for="display-name">Nuevo nombre</label>
                         <input type="text" name="display-name" id="display-name" class="form-control" required />
                     </div>
@@ -80,7 +80,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-					<div class="form-group mb-3">
+                    <div class="form-group mb-3">
                         <label for="email">Nuevo email</label>
                         <input type="email" name="email" id="email" class="form-control" required />
                     </div>
@@ -101,18 +101,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-					<div class="form-group mb-3">
+                    <div class="form-group mb-3">
                         <label for="password">Nueva contraseña</label>
                         <input type="password" name="password" id="password" class="form-control pwd-register" required />
                     </div>
-					<div class="form-group mb-3">
+                    <div class="form-group mb-3">
                         <label for="repeat-password">Repetir contraseña</label>
                         <input type="password" name="repeat-password" id="repeat-password" class="form-control pwd-register" required />
                     </div>
-					<div id="pwd-not-match" class="form-group mb-3 alert alert-warning">Las contraseñas deben ser iguales</div>
+                    <div id="pwd-not-match" class="form-group mb-3 alert alert-warning">Las contraseñas deben ser iguales</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="password-changed-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="pwd-not-match" class="form-group mb-3 alert alert-success">Se ha cambiado la contraseña</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
         </div>

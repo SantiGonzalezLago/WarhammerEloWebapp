@@ -100,10 +100,71 @@ class Login extends BaseController
         return redirect()->back();
     }
 
-    public function resetPassword() {
+    public function resetPassword($encryptedText = '') {
         if (session('id')) {
             return redirect()->to('/');
         }
-        // TODO
+
+        $encrypter = \Config\Services::encrypter();
+
+        if ($encryptedText == '') {
+            $email = $this->request->getVar('email');
+            $player = $this->userModel->where('email', $email)->where('active', 1)->first();
+            session()->setFlashdata('success', 'Se ha enviado un email con instrucciones para reiniciar la contraseña.');
+            if (isset($player)) {
+                $id = $player['id'];
+                $email = $player['email'];
+                $time = time();
+
+                $code = $id . '__' . $email . '__' . $time;
+                $encryptedCode = bin2hex($encrypter->encrypt($code));
+
+                // TODO Send mail instead of this
+                session()->setFlashdata('login_error', '<a href="'.base_url('/login/resetPassword/' . $encryptedCode).'">ENLACE</a>');
+            }
+            return redirect()->back();
+        } else {
+            try {
+                $decrypted = explode('__', $encrypter->decrypt(hex2bin($encryptedText)));
+                $id = $decrypted[0];
+                $email = $decrypted[1];
+                $timeCreated = $decrypted[2];
+            } catch (\Exception $e) {
+                session()->setFlashdata('login_error', 'El enlace no es válido.');
+                return redirect()->to('/login');
+            }
+            $timeNow = time();
+            if ($timeNow - $timeCreated > (24*60*60)) {
+                session()->setFlashdata('login_error', 'El enlace ha caducado.');
+                return redirect()->to('/login');
+            }
+
+			session()->set([
+				'reset_id' => $id,
+			]);
+
+            $this->setTitle("Reinicio de contraseña");
+            return $this->loadView('reset_password');
+        }
+    }
+
+    public function reset() {
+        if (session('id')) {
+            return redirect()->to('/');
+        }
+
+        $id = session('reset_id');
+		$password = $this->request->getVar('password');
+		$repeatPassword = $this->request->getVar('repeat-password');
+
+        unset($_SESSION['reset_id']);
+
+        if (isset($id) && $password == $repeatPassword) {
+            $this->userModel->changeField($id, 'password', password_hash($password, PASSWORD_BCRYPT));
+            session()->setFlashdata('success', 'Se ha actualizado la contraseña. Ya puedes iniciar sesión.');
+        } else {
+            session()->setFlashdata('login_error', 'No se ha podido cambiar la contraseña.');
+        }
+        return redirect()->to('/login');
     }
 }
