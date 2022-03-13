@@ -75,8 +75,10 @@ class Games extends BaseController
                 $result = null;
         }
 
-        $newElo1 = isset($results) ? calculateNewRating($eloPlayer1, $eloPlayer2, $results[0]) : null;
-        $newElo2 = isset($results) ? calculateNewRating($eloPlayer2, $eloPlayer1, $results[1]) : null;
+		$kFactor = $this->settingModel->getSettingValue('k_factor');
+
+        $newElo1 = isset($results) ? calculateNewRating($eloPlayer1, $eloPlayer2, $results[0], $kFactor) : null;
+        $newElo2 = isset($results) ? calculateNewRating($eloPlayer2, $eloPlayer1, $results[1], $kFactor) : null;
 
         $this->gameModel->insertGame($title, $description, $player1, $player2, $result, $newElo1, $newElo2);
 

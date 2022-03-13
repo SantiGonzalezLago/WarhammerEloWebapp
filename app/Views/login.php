@@ -38,11 +38,67 @@
 	</div>
 
 	<div class="form-group mb-3 d-grid">
-		<a href="<?= base_url('/login/resetPassword') ?>" class="btn btn-warning">He olvidado mi contraseña</a>
+		<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reset-password-modal">He olvidado mi contraseña</button>
 	</div>
 	
 	<div class="form-group mb-3 d-grid">
-		<a href="<?= base_url('/login/register') ?>" class="btn btn-secondary">Crear cuenta nueva</a>
+		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#register-modal">Crear cuenta nueva</button>
 	</div>
 
 </form>
+
+<div class="modal" id="register-modal" tabindex="-1">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Crear cuenta nueva</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="register-form" action="<?= base_url('/login/register') ?>" method="POST">
+					<div class="form-group mb-3">
+						<label for="email">Email</label>
+						<input type="text" name="email" id="email" class="form-control" required />
+					</div>
+					<div class="form-group mb-3">
+						<label for="password">Contraseña</label>
+						<input type="password" name="password" id="password" class="form-control" required />
+					</div>
+					<div class="form-group mb-3">
+						<label for="repeat_password">Repetir contraseña</label>
+						<input type="password" name="repeat_password" id="repeat_password" class="form-control" required />
+					</div>
+					<div class="form-group mb-3">
+						<label for="display_name">Nombre</label>
+						<input type="text" name="display_name" id="display_name" class="form-control" required />
+					</div>
+					<div class="form-group mb-3 d-grid">
+						<button type="submit" class="btn btn-primary">Registrarse</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="reset-password-modal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Contraseña olvidada</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="reset-password-form" action="<?= base_url('/login/resetPassword') ?>" method="POST">
+					<div class="form-group mb-3">
+						<label for="email">Email</label>
+						<input type="text" name="email" id="email"  class="form-control" value="<?= session()->getFlashdata('email')?session()->getFlashdata('email'):'' ?>" required />
+					</div>
+					<div class="form-group mb-3 d-grid">
+						<button type="submit" class="btn btn-primary">Reiniciar contraseña</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

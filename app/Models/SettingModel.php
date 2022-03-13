@@ -16,8 +16,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-function calculateNewRating($currentRating, $opponentRating, $result, $kFactor) {
-    $expectedScore = 1 / ( 1 + ( pow( 10 , ( $opponentRating - $currentRating ) / 400 ) ) );
-    $newRating = $currentRating + ( $kFactor * ( $result - $expectedScore ) );
-    return $newRating;
+namespace App\Models;  
+use CodeIgniter\Model;
+
+  
+class SettingModel extends Model {
+
+	protected $table = 'setting';
+	protected $primaryKey = 'key';
+
+	protected $allowedFields = [
+		'key',
+		'value',
+		'description',
+		'type',
+	];
+
+    public function getSettingValue($key) {
+        $setting =  $this->db->table('setting')->where('key', $key)->get()->getRow();
+
+        if (isset($setting)) {
+            return $setting->value;
+        } else {
+            return null;
+        }
+    }
+
 }

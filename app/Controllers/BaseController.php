@@ -69,6 +69,7 @@ class BaseController extends Controller
         // Preload any models, libraries, etc, here.
         $this->userModel = model('UserModel');
         $this->gameModel = model('GameModel');
+        $this->settingModel = model('SettingModel');
 
         if ($this->isUserLoggedIn()) {
 			$this->data['userdata'] = $this->getUserData();

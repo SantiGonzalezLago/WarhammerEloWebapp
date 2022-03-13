@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-03-2022 a las 18:33:01
+-- Tiempo de generación: 13-03-2022 a las 15:08:20
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.0.13
 
@@ -74,6 +74,28 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `setting`
+--
+
+CREATE TABLE `setting` (
+  `key` varchar(20) NOT NULL,
+  `value` varchar(20) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `type` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `setting`
+--
+
+INSERT INTO `setting` (`key`, `value`, `description`, `type`) VALUES
+('base_elo', '1000', 'El rating Elo inicial para nuevos jugadores.', 'number'),
+('k_factor', '24', 'El factor K usando en la fórmula Elo.', 'number'),
+('user_autoregister', '0', 'Permite que los usuarios se registren sin necesidad de activación por parte de un administrador.', 'checkbox');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `user`
 --
 
@@ -86,27 +108,6 @@ CREATE TABLE `user` (
   `admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura Stand-in para la vista `user_elo`
--- (Véase abajo para la vista actual)
---
-CREATE TABLE `user_elo` (
-`id` int(10) unsigned
-,`display_name` varchar(100)
-,`elo` int(11)
-);
-
--- --------------------------------------------------------
-
---
--- Estructura para la vista `user_elo`
---
-DROP TABLE IF EXISTS `user_elo`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_elo`  AS SELECT `u`.`id` AS `id`, `u`.`display_name` AS `display_name`, coalesce((select if(`game`.`player1_id` = `u`.`id`,`game`.`player1_elo_after`,`game`.`player2_elo_after`) AS `elo` from `game` where (`game`.`player1_id` = `u`.`id` or `game`.`player2_id` = `u`.`id`) and `game`.`result` is not null order by `game`.`date` desc limit 1),1000) AS `elo` FROM `user` AS `u` WHERE `u`.`active` = 1 ORDER BY coalesce((select if(`game`.`player1_id` = `u`.`id`,`game`.`player1_elo_after`,`game`.`player2_elo_after`) AS `elo` from `game` where (`game`.`player1_id` = `u`.`id` or `game`.`player2_id` = `u`.`id`) and `game`.`result` is not null order by `game`.`date` desc limit 1),1000) DESC ;
-
 --
 -- Índices para tablas volcadas
 --
@@ -118,6 +119,12 @@ ALTER TABLE `game`
   ADD PRIMARY KEY (`id`),
   ADD KEY `game_FK_player1` (`player1_id`),
   ADD KEY `game_FK_player2` (`player2_id`);
+
+--
+-- Indices de la tabla `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`key`);
 
 --
 -- Indices de la tabla `user`

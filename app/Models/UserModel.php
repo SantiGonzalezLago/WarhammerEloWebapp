@@ -35,12 +35,37 @@ class UserModel extends Model {
 	];
 
 	public function getPlayers() {
-		return $this->db->table('user_elo')->get()->getResultArray();
+		$settingModel = new SettingModel();
+		$baseElo = $settingModel->getSettingValue('base_elo');
+
+		$subquery = "(SELECT IF(`warhammer`.`game`.`player1_id` = `u`.`id`, `warhammer`.`game`.`player1_elo_after`, `warhammer`.`game`.`player2_elo_after`) AS `elo` FROM `warhammer`.`game` WHERE (`warhammer`.`game`.`player1_id` = `u`.`id` OR `warhammer`.`game`.`player2_id` = `u`.`id`) AND `warhammer`.`game`.`result` IS NOT NULL ORDER BY `warhammer`.`game`.`date` DESC LIMIT 1)";
+		$query = "SELECT
+				`u`.*,
+				COALESCE($subquery, $baseElo) AS `elo`
+			FROM
+				`warhammer`.`user` `u`
+			WHERE
+				`u`.`active` = 1
+			ORDER BY elo DESC";
+
+		return $this->db->query($query)->getResultArray();
 	}
 
 	public function getPlayer($id) {
-		$query = $this->db->table('user')->select('user.*, user_elo.elo')->where('user.id', $id)->join('user_elo', 'user.id = user_elo.id');
-		return $query->get()->getResultArray()[0];
+		$settingModel = new SettingModel();
+		$baseElo = $settingModel->getSettingValue('base_elo');
+
+		$subquery = "(SELECT IF(`warhammer`.`game`.`player1_id` = `u`.`id`, `warhammer`.`game`.`player1_elo_after`, `warhammer`.`game`.`player2_elo_after`) AS `elo` FROM `warhammer`.`game` WHERE (`warhammer`.`game`.`player1_id` = `u`.`id` OR `warhammer`.`game`.`player2_id` = `u`.`id`) AND `warhammer`.`game`.`result` IS NOT NULL ORDER BY `warhammer`.`game`.`date` DESC LIMIT 1)";
+		$query = "SELECT
+				`u`.*,
+				COALESCE($subquery, $baseElo) AS `elo`
+			FROM
+				`warhammer`.`user` `u`
+			WHERE
+				`u`.`active` = 1 AND `u`.`id` = $id
+			ORDER BY elo DESC";
+
+		return $this->db->query($query)->getResultArray()[0];
 	}
 
 }
