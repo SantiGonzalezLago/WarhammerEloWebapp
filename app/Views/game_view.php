@@ -29,4 +29,4 @@
         <td colspan="3" class="<?= $game['description'] == "" ? "text-muted" : "" ?>"><?= $game['description'] == "" ? "Sin descripción" : $game['description']?></td>
     </tr>
 </table>
-<a href="<?= base_url('/games') ?>" class="btn btn-outline-secondary float-end">Volver a Partidas</a>
+<a href="<?= base_url('/games') ?>" class="btn btn-outline-secondary float-right">Volver a Partidas</a>

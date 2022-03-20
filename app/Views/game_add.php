@@ -23,14 +23,14 @@
 	</div>
     <div class="form-group row input-group mb-3">
         <div class="col-5">
-            <select class="form-control select2" name="player1" id="player1">
+            <select name="player1" id="player1" data-width="100%" data-live-search="true" data-show-subtext="true">
                 <?php foreach ($players as $player) : ?>
-                    <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
+                    <option value="<?= $player['id'] ?>" data-subtext="<?= $player['elo'] ?>"><?= $player['display_name'] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
         <div class="col-2">
-            <select class="form-control" name="result" id="result">
+            <select name="result" id="result" data-width="100%">
                 <option value="" selected>Por finalizar</option>
                 <option value="1-0">1-0</option>
                 <option value="0-1">0-1</option>
@@ -38,9 +38,9 @@
             </select>
         </div>
         <div class="col-5">
-            <select class="form-control select2" name="player2" id="player2">
+            <select name="player2" id="player2" data-width="100%" data-live-search="true" data-show-subtext="true">
                 <?php foreach ($players as $player) : ?>
-                    <option value="<?= $player['id'] ?>"><?= $player['display_name'] ?> (<?= $player['elo'] ?>)</option>
+                    <option value="<?= $player['id'] ?>" data-subtext="<?= $player['elo'] ?>"><?= $player['display_name'] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

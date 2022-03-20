@@ -16,19 +16,19 @@
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
   */
 
-$(document).ready(function() {
+$(function() {
 
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    });
 
-    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
     var toastList = toastElList.map(function (toastEl) {
         return new bootstrap.Toast(toastEl, null)
-    })
+    });
 
-    $('.select2').select2();
+    $('select').selectpicker();
 
     $('#pwd-not-match').hide();
 

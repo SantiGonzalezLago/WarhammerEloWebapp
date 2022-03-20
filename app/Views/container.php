@@ -19,7 +19,7 @@
 <!DOCTYPE html>
 <head>
 	<title><?= (isset($title) ? $title . ' - ' : '') ?>Warhammer</title>
-	
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -31,8 +31,8 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
 	<script type="text/javascript" src="<?= base_url('/assets/js/bootstrap.bundle.min.js') ?>"></script>
 
-	<link rel="stylesheet" href="<?= base_url('/assets/css/select2.min.css') ?>" />
-	<script type="text/javascript" src="<?= base_url('/assets/js/select2.min.js') ?>"></script>
+	<script type="text/javascript" src="<?= base_url('/assets/js/bootstrap-select.min.js') ?>"></script>
+	<link rel="stylesheet" href="<?= base_url('/assets/css/bootstrap-select.min.css') ?>" />
 
 	<script>
 		baseUrl = "<?= base_url() ?>";
@@ -48,13 +48,13 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="<?= base_url() ?>">Warhammer</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 					<?php if (isset($userdata)) : ?>
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link" href="<?= base_url('/players') ?>">Jugadores</a></li>
 							<li class="nav-item"><a class="nav-link" href="<?= base_url('/games') ?>">Partidas</a></li>
 							<?php if ($userdata['admin']) : ?>
@@ -64,15 +64,17 @@
 							<li class="nav-item"><a class="nav-link" href="https://github.com/SantiGonzalezLago/WarhammerEloWebapp/issues" target="_blank">Sugerencias</a></li>
 						</ul>
 
-						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-						<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<?= $userdata['display_name'] ?>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="<?= base_url('/players/view/' . $userdata['id']) ?>">Perfil</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="<?= base_url('/login/logout') ?>">Cerrar Sesión</a></li>
+						<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+									<?= $userdata['display_name'] ?>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" href="<?= base_url('/players/view/' . $userdata['id']) ?>">Perfil</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="<?= base_url('/login/logout') ?>">Cerrar Sesión</a></li>
+								</ul>
+							</li>
 						</ul>
 
 					<?php endif; ?>

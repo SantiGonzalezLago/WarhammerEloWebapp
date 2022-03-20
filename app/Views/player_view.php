@@ -22,7 +22,7 @@
         <td>
             <?= $player['display_name'] ?>
             <?php if ($player['id'] == session('id')) : ?>
-                <input type="button" class="btn btn-outline-primary btn-sm float-end"  data-bs-toggle="modal" data-bs-target="#change-display-name-modal" value="Cambiar">
+                <input type="button" class="btn btn-outline-primary btn-sm float-right"  data-toggle="modal" data-target="#change-display-name-modal" value="Cambiar">
             <?php endif; ?>
         </td>
     </tr>
@@ -35,19 +35,19 @@
             <th>Email</th>
             <td>
                 <?= $player['email'] ?>
-                <input type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#change-email-modal" value="Cambiar">
+                <input type="button" class="btn btn-outline-primary btn-sm float-right" data-toggle="modal" data-target="#change-email-modal" value="Cambiar">
             </td>
         </tr>
         <tr>
             <th>Contraseña</th>
             <td>
                 &bull;&bull;&bull;&bull;&bull;&bull;
-                <input type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#change-password-modal" value="Cambiar">
+                <input type="button" class="btn btn-outline-primary btn-sm float-right" data-toggle="modal" data-target="#change-password-modal" value="Cambiar">
             </td>
         </tr>
     <?php endif; ?>
 </table>
-<a href="<?= base_url('/players') ?>" class="btn btn-outline-secondary float-end">Volver a Jugadores</a>
+<a href="<?= base_url('/players') ?>" class="btn btn-outline-secondary float-right">Volver a Jugadores</a>
 
 <?php if ($player['id'] == session('id')) : ?>
 
@@ -56,7 +56,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar nombre</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-3">
@@ -77,7 +79,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar email</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-3">
@@ -98,7 +102,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar contraseña</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-3">
@@ -125,7 +131,7 @@
                     <div id="pwd-not-match" class="form-group mb-3 alert alert-success">Se ha cambiado la contraseña</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
         </div>
