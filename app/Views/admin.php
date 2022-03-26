@@ -17,12 +17,24 @@
 ?>
 
 <div class="align-items-start pt-3">
+    <?php if (session()->getFlashdata('activeTab')) : ?>
+        <input type="hidden" id="active-tab" value="<?= session()->getFlashdata('activeTab') ?>"></input>
+    <?php endif; ?>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="home" aria-selected="true">Configuración</a>
+            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Configuración</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#users" role="tab" aria-controls="profile" aria-selected="false">Administrar usuarios</a>
+            <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Administrar usuarios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="game-types-tab" data-toggle="tab" href="#game-types" role="tab" aria-controls="game-types" aria-selected="false">Tipos de partida</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="game-sizes-tab" data-toggle="tab" href="#game-sizes" role="tab" aria-controls="game-sizes" aria-selected="false">Tamaños de partida</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="armies-tab" data-toggle="tab" href="#armies" role="tab" aria-controls="armies" aria-selected="false">Ejércitos</a>
         </li>
     </ul>
     <div class="tab-content" id="v-pills-tabContent">
@@ -48,7 +60,35 @@
             </div>
         </div>
         <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
-            Administrar usuarios
+            <table class="table table-borderless">
+                <tr>
+                    <th></th>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                </tr>
+                <?php foreach ($users as $user) : ?>
+                    <tr>
+                        <td>
+                            <?php if ($user['active']) : ?>
+                                <a class="btn btn-danger <?= ($user['id'] == session('id'))?'disabled':'' ?>" href="<?= base_url('/admin/setactive/' . $user['id'] . '/0') ?>">Desactivar</a>
+                            <?php else : ?>
+                                <a class="btn btn-success"  href="<?= base_url('/admin/setactive/' . $user['id'] . '/1') ?>">Activar</a>
+                            <?php endif; ?>
+                        </td>
+                        <td><?= $user['display_name'] ?></td>
+                        <td><?= $user['email'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="game-types" role="tabpanel" aria-labelledby="game-types-tab">
+            game-types
+        </div>
+        <div class="tab-pane fade" id="game-sizes" role="tabpanel" aria-labelledby="game-sizes-tab">
+            game-sizes
+        </div>
+        <div class="tab-pane fade" id="armies" role="tabpanel" aria-labelledby="armies-tab">
+            armies
         </div>
     </div>
 </div>

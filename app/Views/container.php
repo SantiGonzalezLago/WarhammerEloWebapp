@@ -18,7 +18,7 @@
 
 <!DOCTYPE html>
 <head>
-	<title><?= (isset($title) ? $title . ' - ' : '') ?>Warhammer</title>
+	<title><?= (isset($title) ? $title . ' - ' : '') ?>Warscores</title>
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,7 +47,7 @@
 	<header class="p-0">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="<?= base_url() ?>">Warhammer</a>
+				<a class="navbar-brand" href="<?= base_url() ?>"><span class="title">WARSCORES</span> <small class="text-muted">(alfa)</small></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>

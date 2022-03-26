@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-03-2022 a las 15:08:20
+-- Tiempo de generación: 26-03-2022 a las 13:03:22
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.0.13
 
@@ -26,9 +26,22 @@ USE `warhammer`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `army`
+--
+
+DROP TABLE IF EXISTS `army`;
+CREATE TABLE `army` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `game`
 --
 
+DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -38,12 +51,17 @@ CREATE TABLE `game` (
   `result` enum('1-0','0-1','TIE') DEFAULT NULL,
   `player1_elo_after` int(11) DEFAULT NULL,
   `player2_elo_after` int(11) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `game_type_id` int(10) UNSIGNED DEFAULT NULL,
+  `game_size_id` int(10) UNSIGNED DEFAULT NULL,
+  `player1_army_id` int(10) UNSIGNED DEFAULT NULL,
+  `player2_army_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Disparadores `game`
 --
+DROP TRIGGER IF EXISTS `check_game_insert`;
 DELIMITER $$
 CREATE TRIGGER `check_game_insert` BEFORE INSERT ON `game` FOR EACH ROW BEGIN 
 	IF NEW.`player1_id` = NEW.`player2_id` THEN
@@ -57,6 +75,7 @@ CREATE TRIGGER `check_game_insert` BEFORE INSERT ON `game` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `check_game_update`;
 DELIMITER $$
 CREATE TRIGGER `check_game_update` BEFORE UPDATE ON `game` FOR EACH ROW BEGIN 
 	IF NEW.`player1_id` = NEW.`player2_id` THEN
@@ -74,9 +93,34 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `game_size`
+--
+
+DROP TABLE IF EXISTS `game_size`;
+CREATE TABLE `game_size` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `game_type`
+--
+
+DROP TABLE IF EXISTS `game_type`;
+CREATE TABLE `game_type` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `setting`
 --
 
+DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
   `key` varchar(20) NOT NULL,
   `value` varchar(20) DEFAULT NULL,
@@ -91,6 +135,10 @@ CREATE TABLE `setting` (
 INSERT INTO `setting` (`key`, `value`, `description`, `type`) VALUES
 ('base_elo', '1000', 'El rating Elo inicial para nuevos jugadores.', 'number'),
 ('k_factor', '24', 'El factor K usando en la fórmula Elo.', 'number'),
+('smtp_email', NULL, 'Dirección de email para enviar emails', 'email'),
+('smtp_host', NULL, 'Host para enviar emails', 'text'),
+('smtp_password', NULL, 'Contraseña para enviar emails', 'password'),
+('smtp_port', NULL, 'Puerto para enviar emails', 'number'),
 ('user_autoregister', '0', 'Permite que los usuarios se registren sin necesidad de activación por parte de un administrador.', 'checkbox');
 
 -- --------------------------------------------------------
@@ -99,6 +147,7 @@ INSERT INTO `setting` (`key`, `value`, `description`, `type`) VALUES
 -- Estructura de tabla para la tabla `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -113,12 +162,34 @@ CREATE TABLE `user` (
 --
 
 --
+-- Indices de la tabla `army`
+--
+ALTER TABLE `army`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `game`
 --
 ALTER TABLE `game`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `game_FK_game_size` (`game_size_id`),
+  ADD KEY `game_FK_game_type` (`game_type_id`),
+  ADD KEY `game_FK_player1_army` (`player1_army_id`),
   ADD KEY `game_FK_player1` (`player1_id`),
-  ADD KEY `game_FK_player2` (`player2_id`);
+  ADD KEY `game_FK_player2` (`player2_id`),
+  ADD KEY `game_FK_player2_army` (`player2_army_id`);
+
+--
+-- Indices de la tabla `game_size`
+--
+ALTER TABLE `game_size`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `game_type`
+--
+ALTER TABLE `game_type`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `setting`
@@ -131,17 +202,35 @@ ALTER TABLE `setting`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_unique_email` (`email`),
   ADD UNIQUE KEY `user_unique_display_name` (`display_name`);
-  ADD UNIQUE KEY `user_unique_email` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
+-- AUTO_INCREMENT de la tabla `army`
+--
+ALTER TABLE `army`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `game`
 --
 ALTER TABLE `game`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `game_size`
+--
+ALTER TABLE `game_size`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `game_type`
+--
+ALTER TABLE `game_type`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -158,8 +247,12 @@ ALTER TABLE `user`
 -- Filtros para la tabla `game`
 --
 ALTER TABLE `game`
-  ADD CONSTRAINT `game_FK_player1` FOREIGN KEY (`player1_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `game_FK_player2` FOREIGN KEY (`player2_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `game_FK_game_size` FOREIGN KEY (`game_size_id`) REFERENCES `game_size` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `game_FK_game_type` FOREIGN KEY (`game_type_id`) REFERENCES `game_type` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `game_FK_player1` FOREIGN KEY (`player1_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `game_FK_player1_army` FOREIGN KEY (`player1_army_id`) REFERENCES `army` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `game_FK_player2` FOREIGN KEY (`player2_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `game_FK_player2_army` FOREIGN KEY (`player2_army_id`) REFERENCES `army` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

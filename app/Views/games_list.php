@@ -25,10 +25,10 @@
     </tr>
     <?php foreach ($games as $game) : ?>
         <tr>
-            <td><a href="<?= base_url('/games/view/' . $game['id']) ?>" ><?= $game['title'] ?></a></td>
-            <td><?= $game['player1_name'] ?></td>
+            <td><a href="<?= base_url('/games/view/' . $game['id']) ?>" ><?= $game['title'] ?></a> <small class="text-muted"><?= $game['type'] ?> <?= $game['size'] ?></small></td>
+            <td><?= $game['player1_name'] ?> <small class="text-muted"><?= $game['player1_army'] ?></small></td>
             <td><?= $game['result'] == "TIE" ? "&half;-&half;" : $game['result'] ?></td>
-            <td><?= $game['player2_name'] ?></td>
+            <td><?= $game['player2_name'] ?> <small class="text-muted"><?= $game['player2_army'] ?></td>
         </tr>
     <?php endforeach; ?>
 </table>

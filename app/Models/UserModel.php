@@ -19,7 +19,6 @@
 namespace App\Models;  
 use CodeIgniter\Model;
 
-  
 class UserModel extends Model {
 
 	protected $table = 'user';
@@ -33,6 +32,10 @@ class UserModel extends Model {
 		'active',
 		'admin',
 	];
+
+	public function getUsers() {
+		return $this->db->table('user')->get()->getResultArray();
+	}
 
 	public function getPlayers() {
 		$settingModel = new SettingModel();

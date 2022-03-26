@@ -21,9 +21,12 @@
         <th colspan="3"><?= $game['title'] ?></th>
     </tr>
     <tr>
-        <td><?= $game['player1_name'] ?></td>
+        <td colspan="3"><?= $game['type'] ?> <small class="text-muted"><?= $game['size'] ?></small></td>
+    </tr>
+    <tr>
+        <td><?= $game['player1_name'] ?> <small class="text-muted"><?= $game['player1_army'] ?></td>
         <td><?= $game['result'] == "TIE" ? "&half;-&half;" : $game['result'] ?></td>
-        <td><?= $game['player2_name'] ?></td>
+        <td><?= $game['player2_name'] ?> <small class="text-muted"><?= $game['player2_army'] ?></td>
     </tr>
     <tr>
         <td colspan="3" class="<?= $game['description'] == "" ? "text-muted" : "" ?>"><?= $game['description'] == "" ? "Sin descripción" : $game['description']?></td>

@@ -19,7 +19,6 @@
 namespace App\Models;  
 use CodeIgniter\Model;
 
-  
 class GameModel extends Model {
 
 	protected $table = 'game';
@@ -35,11 +34,18 @@ class GameModel extends Model {
 		'player1_elo_after',
 		'player2_elo_after',
 		'date',
+		'game_type_id',
+		'game_size_id',
+		'player1_army_id',
+		'player2_army_id',
 	];
 
 	public function getGames() {
-		$query = $this->db->table('game')->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name')
-			->orderBy('date', 'DESC')->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id');
+		$query = $this->db->table('game')->orderBy('date', 'DESC')
+			->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name, p1a.name AS player1_army, p2a.name AS player2_army, game_type.name AS type, game_size.name AS size')
+			->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id')
+			->join('army p1a', 'game.player1_army_id = p1a.id', 'LEFT')->join('army p2a', 'game.player2_army_id = p2a.id', 'LEFT')
+			->join('game_type', 'game.game_type_id = game_type.id', 'LEFT')->join('game_size', 'game.game_size_id = game_size.id', 'LEFT');
 		return $query->get()->getResultArray();
 	}
 
@@ -50,8 +56,11 @@ class GameModel extends Model {
 	}
 
 	public function getGame($id) {
-		$query = $this->db->table('game')->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name')->where('game.id', $id)
-			->orderBy('date', 'DESC')->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id');
+		$query = $this->db->table('game')->orderBy('date', 'DESC')->where('game.id', $id)
+			->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name, p1a.name AS player1_army, p2a.name AS player2_army, game_type.name AS type, game_size.name AS size')
+			->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id')
+			->join('army p1a', 'game.player1_army_id = p1a.id', 'LEFT')->join('army p2a', 'game.player2_army_id = p2a.id', 'LEFT')
+			->join('game_type', 'game.game_type_id = game_type.id', 'LEFT')->join('game_size', 'game.game_size_id = game_size.id', 'LEFT');
 		return $query->get()->getResultArray()[0];
 	}
 

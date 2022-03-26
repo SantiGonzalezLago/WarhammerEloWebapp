@@ -149,4 +149,9 @@ $(function() {
         });
     });
 
+    if ($("#active-tab").length) {
+        let activeTab = $("#active-tab").val();
+        $("#" + activeTab  + "-tab").click();
+    }
+
 });

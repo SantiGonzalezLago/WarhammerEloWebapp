@@ -22,16 +22,24 @@ class Admin extends BaseController {
 
     public function index() {
         $settings = $this->settingModel->getSettings();
+        $users = $this->userModel->getUsers();
 
         $this->setData('settings', $settings);
+        $this->setData('users', $users);
         $this->setTitle("Administración");
         return $this->loadView('admin');
     }
 
+    public function setActive($playerId, $active) {
+        $this->userModel->changeField($playerId, 'active', $active);
+
+        
+		session()->setFlashdata('activeTab', 'users');
+        return redirect()->back();
+    }
+
     public function saveSettingsAjax() {
         $settings = $this->request->getVar('settings');
-
-        // return json_encode($settings);
 
         $affectedRows = 0;
 
