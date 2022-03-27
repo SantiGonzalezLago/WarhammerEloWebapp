@@ -68,4 +68,67 @@ class Admin extends BaseController {
 
         return json_encode($affectedRows);
     }
+
+    public function deleteType($id) {
+        $this->gameModel->deleteGameType($id);
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
+
+    public function editType() {
+        $id = $this->request->getVar('id');
+        $name = $this->request->getVar('name');
+
+        if ($id) {
+            $this->gameModel->editGameType($id, $name);
+        } else {
+            $this->gameModel->addGameType($name);
+        }
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
+
+    public function deleteSize($id) {
+        $this->gameModel->deleteGameSize($id);
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
+
+    public function editSize() {
+        $id = $this->request->getVar('id');
+        $name = $this->request->getVar('name');
+
+        if ($id) {
+            $this->gameModel->editGameSize($id, $name);
+        } else {
+            $this->gameModel->addGameSize($name);
+        }
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
+
+    public function deleteArmy($id) {
+        $this->gameModel->deleteArmy($id);
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
+
+    public function editArmy() {
+        $id = $this->request->getVar('id');
+        $name = $this->request->getVar('name');
+
+        if ($id) {
+            $this->gameModel->editArmy($id, $name);
+        } else {
+            $this->gameModel->addArmy($name);
+        }
+
+		session()->setFlashdata('activeTab', 'game-options');
+        return redirect()->back();
+    }
 }

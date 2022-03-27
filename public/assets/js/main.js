@@ -79,7 +79,7 @@ $(function() {
             url: baseUrl + "/admin/saveSettingsAjax",
             dataType:'json',
             data: { settings: changes },
-            success: function(data) {
+            success: function() {
                 $('.setting-row.table-warning').removeClass('table-warning');
                 $("#save-settings-modal").modal('show');
                 $("#save-settings").attr("disabled", true);
@@ -181,6 +181,81 @@ $(function() {
         let p1 = $('#player1').val();
         let p2 = $('#player2').val();
         if (p1 == p2) e.preventDefault();
+    });
+
+    $('#delete-type').on('click', function() {
+        let id = $('#game-type').val();
+        if (id) {
+            window.location.href = baseUrl + "/admin/deleteType/" + id;
+        }
+    });
+
+    $('#delete-size').on('click', function() {
+        let id = $('#game-size').val();
+        if (id) {
+            window.location.href = baseUrl + "/admin/deleteSize/" + id;
+        }
+    });
+
+    $('#delete-army').on('click', function() {
+        let id = $('#game-army').val();
+        if (id) {
+            window.location.href = baseUrl + "/admin/deleteArmy/" + id;
+        }
+    });
+
+    $('#edit-type').on('click', function() {
+        let id = $('#game-type').val();
+        if (id) {
+            let name = $('#game-type option:selected').text();
+            $("#type-modal h5").text('Editando tipo');
+            $("#type-modal #id").val(id);
+            $("#type-modal #name").val(name);
+            $("#type-modal").modal('show');
+        }
+    });
+
+    $('#add-type').on('click', function() {
+        $("#type-modal h5").text('Nuevo tipo');
+        $("#type-modal #id").val('');
+        $("#type-modal #name").val('');
+        $("#type-modal").modal('show');
+    });
+
+    $('#edit-size').on('click', function() {
+        let id = $('#game-size').val();
+        if (id) {
+            let name = $('#game-size option:selected').text();
+            $("#size-modal h5").text('Editando tamaño');
+            $("#size-modal #id").val(id);
+            $("#size-modal #name").val(name);
+            $("#size-modal").modal('show');
+        }
+    });
+
+    $('#add-size').on('click', function() {
+        $("#size-modal h5").text('Nuevo tamaño');
+        $("#size-modal #id").val('');
+        $("#size-modal #name").val('');
+        $("#size-modal").modal('show');
+    });
+
+    $('#edit-army').on('click', function() {
+        let id = $('#game-army').val();
+        if (id) {
+            let name = $('#game-army option:selected').text();
+            $("#army-modal h5").text('Editando ejército');
+            $("#army-modal #id").val(id);
+            $("#army-modal #name").val(name);
+            $("#army-modal").modal('show');
+        }
+    });
+
+    $('#add-army').on('click', function() {
+        $("#army-modal h5").text('Nuevo ejército');
+        $("#army-modal #id").val('');
+        $("#army-modal #name").val('');
+        $("#army-modal").modal('show');
     });
 
 });

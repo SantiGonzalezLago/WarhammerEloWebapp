@@ -79,42 +79,66 @@
             <div class="row border-between">
                 <div class="col-4">
                     <h2>Tipos de partida</h2>
-                    <table class="table table-borderless">
-                        <?php foreach ($gameTypes as $gameType) : ?>
-                            <tr>
-                                <td>
-                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteType/' . $gameType['id']) ?>">Eliminar</a>
-                                </td>
-                                <td><?= $gameType['name'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
+                    <div class="form-group">
+                        <select name="game-type" id="game-type"  data-width="100%" data-live-search="true" data-show-subtext="true" title="Tipo de partida">
+                            <?php foreach ($gameTypes as $gameType) : ?>
+                                <option value="<?= $gameType['id'] ?>"><?= $gameType['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <button id="add-type" type="button" class="btn-block btn btn-success">Añadir</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="edit-type" type="button" class="btn-block btn btn-warning">Editar</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="delete-type" type="button" class="btn-block btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-4">
                     <h2>Tamaños de partida</h2>
-                    <table class="table table-borderless">
-                        <?php foreach ($gameSizes as $gameSize) : ?>
-                            <tr>
-                                <td>
-                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteSize/' . $gameSize['id']) ?>">Eliminar</a>
-                                </td>
-                                <td><?= $gameSize['name'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
+                    <div class="form-group">
+                        <select name="game-size" id="game-size"  data-width="100%" data-live-search="true" data-show-subtext="true" title="Tamaño de partida">
+                            <?php foreach ($gameSizes as $gameSize) : ?>
+                                <option value="<?= $gameSize['id'] ?>"><?= $gameSize['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <button id="add-size" type="button" class="btn-block btn btn-success">Añadir</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="edit-size" type="button" class="btn-block btn btn-warning">Editar</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="delete-size" type="button" class="btn-block btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-4">
                     <h2>Ejércitos</h2>
-                    <table class="table table-borderless">
-                        <?php foreach ($armies as $army) : ?>
-                            <tr>
-                                <td>
-                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteArmy/' . $army['id']) ?>">Eliminar</a>
-                                </td>
-                                <td><?= $army['name'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
+                    <div class="form-group">
+                        <select name="game-size" id="game-army"  data-width="100%" data-live-search="true" data-show-subtext="true" title="Ejército">
+                            <?php foreach ($armies as $army) : ?>
+                                <option value="<?= $army['id'] ?>"><?= $army['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <button id="add-army" type="button" class="btn-block btn btn-success">Añadir</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="edit-army" type="button" class="btn-block btn btn-warning">Editar</button>
+                        </div>
+                        <div class="col-4">
+                            <button id="delete-army" type="button" class="btn-block btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,4 +156,70 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal" id="type-modal" tabindex="-1">
+    <form class="modal-dialog" action="<?= base_url('/admin/editType') ?>" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id" name="id" value=""></input>
+                <div class="form-group mb-3">
+                    <input type="text" name="name" id="name" class="form-control" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal" id="size-modal" tabindex="-1">
+    <form class="modal-dialog" action="<?= base_url('/admin/editSize') ?>" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id" name="id" value=""></input>
+                <div class="form-group mb-3">
+                    <input type="text" name="name" id="name" class="form-control" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal" id="army-modal" tabindex="-1">
+    <form class="modal-dialog" action="<?= base_url('/admin/editArmy') ?>" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id" name="id" value=""></input>
+                <div class="form-group mb-3">
+                    <input type="text" name="name" id="name" class="form-control" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </form>
 </div>

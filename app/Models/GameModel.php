@@ -92,12 +92,66 @@ class GameModel extends Model {
 		return $this->db->table('game_type')->get()->getResultArray();
 	}
 
+	public function addGameType($name) {
+		$this->db->table('game_type')->insert(['name' => $name]);
+
+		return $this->db->affectedRows();
+	}
+
+	public function editGameType($id, $name) {
+		$this->db->table('game_type')->set('name', $name)->where('id', $id)->update();
+
+		return $this->db->affectedRows();
+	}
+
+	public function deleteGameType($id) {
+		$this->db->table('game_type')->delete(['id' => $id]);
+
+		return $this->db->affectedRows();
+	}
+
 	public function getGameSizes() {
 		return $this->db->table('game_size')->get()->getResultArray();
 	}
 
+	public function addGameSize($name) {
+		$this->db->table('game_size')->insert(['name' => $name]);
+
+		return $this->db->affectedRows();
+	}
+
+	public function editGameSize($id, $name) {
+		$this->db->table('game_size')->set('name', $name)->where('id', $id)->update();
+
+		return $this->db->affectedRows();
+	}
+
+	public function deleteGameSize($id) {
+		$this->db->table('game_size')->delete(['id' => $id]);
+
+		return $this->db->affectedRows();
+	}
+
 	public function getArmies() {
 		return $this->db->table('army')->get()->getResultArray();
+	}
+
+	public function addArmy($name) {
+		$this->db->table('army')->insert(['name' => $name]);
+
+		return $this->db->affectedRows();
+	}
+
+	public function editArmy($id, $name) {
+		$this->db->table('army')->set('name', $name)->where('id', $id)->update();
+
+		return $this->db->affectedRows();
+	}
+
+	public function deleteArmy($id) {
+		$this->db->table('army')->delete(['id' => $id]);
+
+		return $this->db->affectedRows();
 	}
 
 }
