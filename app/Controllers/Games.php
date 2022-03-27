@@ -43,8 +43,14 @@ class Games extends BaseController
 
     public function add() {
         $players = $this->userModel->getPlayers();
+        $gameTypes = $this->gameModel->getGameTypes();
+        $gameSizes = $this->gameModel->getGameSizes();
+        $armies = $this->gameModel->getArmies();
 
         $this->setData('players', $players);
+        $this->setData('gameTypes', $gameTypes);
+        $this->setData('gameSizes', $gameSizes);
+        $this->setData('armies', $armies);
         $this->setTitle("Añadir partida");
         return $this->loadView('game_add');
     }
@@ -53,8 +59,12 @@ class Games extends BaseController
         helper('elo');
 
         $title = $this->request->getVar('title');
+        $gameType = $this->request->getVar('game-type');
+        $gameSize = $this->request->getVar('game-size');
         $player1 = $this->request->getVar('player1');
         $player2 = $this->request->getVar('player2');
+        $army1 = $this->request->getVar('army1');
+        $army2 = $this->request->getVar('army2');
         $result = $this->request->getVar('result');
         $description = $this->request->getVar('description');
 
@@ -80,8 +90,14 @@ class Games extends BaseController
         $newElo1 = isset($results) ? calculateNewRating($eloPlayer1, $eloPlayer2, $results[0], $kFactor) : null;
         $newElo2 = isset($results) ? calculateNewRating($eloPlayer2, $eloPlayer1, $results[1], $kFactor) : null;
 
-        $this->gameModel->insertGame($title, $description, $player1, $player2, $result, $newElo1, $newElo2);
+        $this->gameModel->insertGame($title, $description, $player1, $player2, $result, $newElo1, $newElo2, $army1, $army2, $gameType, $gameSize);
 
         return redirect()->to('/games');
+    }
+
+    public function changeDescriptionAjax() {
+        $description = $this->request->getVar('description');
+        $id = $this->request->getVar('id');
+        return json_encode($this->gameModel->changeDescription($id, $description));
     }
 }

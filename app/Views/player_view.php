@@ -22,7 +22,7 @@
         <td>
             <?= $player['display_name'] ?>
             <?php if ($player['id'] == session('id')) : ?>
-                <input type="button" class="btn btn-outline-primary btn-sm float-right"  data-toggle="modal" data-target="#change-display-name-modal" value="Cambiar">
+                <input type="button" class="btn btn-outline-primary btn-sm float-right" data-toggle="modal" data-target="#change-display-name-modal" value="Cambiar">
             <?php endif; ?>
         </td>
     </tr>
@@ -52,7 +52,7 @@
 <?php if ($player['id'] == session('id')) : ?>
 
     <div class="modal" id="change-display-name-modal" tabindex="-1">
-        <div class="modal-dialog">
+        <form class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar nombre</h5>
@@ -68,14 +68,14 @@
                     <div id="display-name-used" class="in-use form-group mb-3 alert alert-warning">Ese nombre está en uso.</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="modal" id="change-email-modal" tabindex="-1">
-        <div class="modal-dialog">
+        <form class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar email</h5>
@@ -91,14 +91,14 @@
                     <div id="email-used" class="in-use form-group mb-3 alert alert-warning">Ese email está en uso.</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="modal" id="change-password-modal" tabindex="-1">
-        <div class="modal-dialog">
+        <form class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Cambiar contraseña</h5>
@@ -118,10 +118,10 @@
                     <div id="pwd-not-match" class="form-group mb-3 alert alert-warning">Las contraseñas deben ser iguales</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="modal" id="password-changed-modal" tabindex="-1">

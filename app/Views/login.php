@@ -41,9 +41,9 @@
 		<button type="submit" class="btn-block btn btn-primary">Iniciar sesión</button>
 	</div>
 
-	<div class="form-group mb-3">
+	<!-- <div class="form-group mb-3">
 		<button type="button" class="btn-block btn btn-warning" data-toggle="modal" data-target="#reset-password-modal">He olvidado mi contraseña</button>
-	</div>
+	</div> -->
 	
 	<div class="form-group mb-3">
 		<button type="button" class="btn-block btn btn-secondary" data-toggle="modal" data-target="#register-modal">Crear cuenta nueva</button>

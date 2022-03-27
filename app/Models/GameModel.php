@@ -64,7 +64,7 @@ class GameModel extends Model {
 		return $query->get()->getResultArray()[0];
 	}
 
-	public function insertGame($title, $description, $player1, $player2, $result, $elo1, $elo2) {
+	public function insertGame($title, $description, $player1, $player2, $result, $elo1, $elo2, $army1, $army2, $gameType, $gameSize) {
 		$this->db->table('game')->insert(array(
 			'title' => $title,
 			'description' => $description,
@@ -73,9 +73,31 @@ class GameModel extends Model {
 			'result' => $result,
 			'player1_elo_after' => $elo1,
 			'player2_elo_after' => $elo2,
+			'player1_army_id' => $army1 != '' ? $army1 : NULL,
+			'player2_army_id' => $army2 != '' ? $army2 : NULL,
+			'game_type_id' => $gameType != '' ? $gameType : NULL,
+			'game_size_id' => $gameSize != '' ? $gameSize : NULL,
 		));
 
 		return $this->db->affectedRows();
+	}
+
+	public function changeDescription($id, $description) {
+		$this->db->table('game')->set('description', $description)->where('id', $id)->update();
+
+		return $this->db->affectedRows();
+	}
+
+	public function getGameTypes() {
+		return $this->db->table('game_type')->get()->getResultArray();
+	}
+
+	public function getGameSizes() {
+		return $this->db->table('game_size')->get()->getResultArray();
+	}
+
+	public function getArmies() {
+		return $this->db->table('army')->get()->getResultArray();
 	}
 
 }

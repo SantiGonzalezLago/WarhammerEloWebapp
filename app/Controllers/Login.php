@@ -119,8 +119,7 @@ class Login extends BaseController
                 $code = $id . '__' . $email . '__' . $time;
                 $encryptedCode = bin2hex($encrypter->encrypt($code));
 
-                // TODO Send mail instead of this
-                session()->setFlashdata('login_error', '<a href="'.base_url('/login/resetPassword/' . $encryptedCode).'">ENLACE</a>');
+                // TODO Send mail: <a href="'.base_url('/login/resetPassword/' . $encryptedCode).'">ENLACE</a>
             }
             return redirect()->back();
         } else {

@@ -28,13 +28,7 @@
             <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Administrar usuarios</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="game-types-tab" data-toggle="tab" href="#game-types" role="tab" aria-controls="game-types" aria-selected="false">Tipos de partida</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="game-sizes-tab" data-toggle="tab" href="#game-sizes" role="tab" aria-controls="game-sizes" aria-selected="false">Tamaños de partida</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="armies-tab" data-toggle="tab" href="#armies" role="tab" aria-controls="armies" aria-selected="false">Ejércitos</a>
+            <a class="nav-link" id="game-options-tab" data-toggle="tab" href="#game-options" role="tab" aria-controls="game-options" aria-selected="false">Opciones de partida</a>
         </li>
     </ul>
     <div class="tab-content" id="v-pills-tabContent">
@@ -81,14 +75,48 @@
                 <?php endforeach; ?>
             </table>
         </div>
-        <div class="tab-pane fade" id="game-types" role="tabpanel" aria-labelledby="game-types-tab">
-            game-types
-        </div>
-        <div class="tab-pane fade" id="game-sizes" role="tabpanel" aria-labelledby="game-sizes-tab">
-            game-sizes
-        </div>
-        <div class="tab-pane fade" id="armies" role="tabpanel" aria-labelledby="armies-tab">
-            armies
+        <div class="tab-pane fade" id="game-options" role="tabpanel" aria-labelledby="game-options-tab">
+            <div class="row border-between">
+                <div class="col-4">
+                    <h2>Tipos de partida</h2>
+                    <table class="table table-borderless">
+                        <?php foreach ($gameTypes as $gameType) : ?>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteType/' . $gameType['id']) ?>">Eliminar</a>
+                                </td>
+                                <td><?= $gameType['name'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="col-4">
+                    <h2>Tamaños de partida</h2>
+                    <table class="table table-borderless">
+                        <?php foreach ($gameSizes as $gameSize) : ?>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteSize/' . $gameSize['id']) ?>">Eliminar</a>
+                                </td>
+                                <td><?= $gameSize['name'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="col-4">
+                    <h2>Ejércitos</h2>
+                    <table class="table table-borderless">
+                        <?php foreach ($armies as $army) : ?>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-danger" href="<?= base_url('/admin/deleteArmy/' . $army['id']) ?>">Eliminar</a>
+                                </td>
+                                <td><?= $army['name'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -18,14 +18,34 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
 class Admin extends BaseController {
+
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger) {
+        parent::initController($request, $response, $logger);
+
+        if (!$this->isAdmin()) {
+            header("Location: " . base_url('/')); 
+            die();
+        }
+    }
 
     public function index() {
         $settings = $this->settingModel->getSettings();
         $users = $this->userModel->getUsers();
 
+        $gameTypes = $this->gameModel->getGameTypes();
+        $gameSizes = $this->gameModel->getGameSizes();
+        $armies = $this->gameModel->getArmies();
+
         $this->setData('settings', $settings);
         $this->setData('users', $users);
+        $this->setData('gameTypes', $gameTypes);
+        $this->setData('gameSizes', $gameSizes);
+        $this->setData('armies', $armies);
         $this->setTitle("Administración");
         return $this->loadView('admin');
     }
@@ -33,7 +53,6 @@ class Admin extends BaseController {
     public function setActive($playerId, $active) {
         $this->userModel->changeField($playerId, 'active', $active);
 
-        
 		session()->setFlashdata('activeTab', 'users');
         return redirect()->back();
     }

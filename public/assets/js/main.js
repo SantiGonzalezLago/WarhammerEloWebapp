@@ -35,7 +35,7 @@ $(function() {
     $('div.in-use').hide();
 
     $('.pwd-register').on('keyup', function() {
-      if ($('#password').val() != $('#repeat-password').val()) {
+      if ($('.pwd-register#password').val() != $('.pwd-register#repeat-password').val()) {
         $('#pwd-not-match').show();
       } else {
         $('#pwd-not-match').hide();
@@ -87,7 +87,8 @@ $(function() {
         });
     });
 
-    $('#change-display-name-modal .btn').on('click', function() {
+    $('#change-display-name-modal form').on('submit', function(e) {
+        e.preventDefault();
         let displayName = $('#change-display-name-modal #display-name').val();
 
         $.ajax({
@@ -105,7 +106,8 @@ $(function() {
         });
     });
 
-    $('#change-email-modal .btn').on('click', function() {
+    $('#change-email-modal form').on('submit', function(e) {
+        e.preventDefault();
         let email = $('#change-email-modal #email').val();
 
         $.ajax({
@@ -123,7 +125,8 @@ $(function() {
         });
     });
 
-    $('#change-password-modal .btn').on('click', function() {
+    $('#change-password-modal form').on('submit', function(e) {
+        e.preventDefault();
         let password = $('#change-password-modal #password').val();
         let repeatPassword = $('#change-password-modal #repeat-password').val();
         if (password != repeatPassword) {
@@ -149,9 +152,35 @@ $(function() {
         });
     });
 
+    
+    $('#change-description-modal form').on('submit', function(e) {
+        e.preventDefault();
+        let description = $('#change-description-modal #description').val();
+        let id = $('#change-description-modal #id').val();
+
+        $.ajax({
+            method: "POST",
+            url: baseUrl + "/games/changeDescriptionAjax",
+            dataType:'json',
+            data: {
+                id: id,
+                description: description
+            },
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+
     if ($("#active-tab").length) {
         let activeTab = $("#active-tab").val();
         $("#" + activeTab  + "-tab").click();
     }
+
+    $('#add-game-form').on('submit', function(e) {
+        let p1 = $('#player1').val();
+        let p2 = $('#player2').val();
+        if (p1 == p2) e.preventDefault();
+    });
 
 });
