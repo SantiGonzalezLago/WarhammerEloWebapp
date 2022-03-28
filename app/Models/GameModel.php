@@ -49,12 +49,6 @@ class GameModel extends Model {
 		return $query->get()->getResultArray();
 	}
 
-	public function getFinishedGames() {
-		$query = $this->db->table('game')->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name')->where('result IS NOT NULL')
-			->orderBy('date', 'DESC')->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id');
-		return $query->get()->getResultArray();
-	}
-
 	public function getGame($id) {
 		$query = $this->db->table('game')->orderBy('date', 'DESC')->where('game.id', $id)
 			->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name, p1a.name AS player1_army, p2a.name AS player2_army, game_type.name AS type, game_size.name AS size')

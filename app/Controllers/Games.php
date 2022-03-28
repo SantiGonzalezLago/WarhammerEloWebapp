@@ -22,7 +22,7 @@ class Games extends BaseController
 {
 
     public function index() {
-        $games = $this->isAdmin() ? $this->gameModel->getGames() : $this->gameModel->getFinishedGames();
+        $games = $this->gameModel->getGames();
 
         $this->setData('games', $games);
         $this->setTitle("Partidas");
