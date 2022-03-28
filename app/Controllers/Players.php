@@ -49,7 +49,40 @@ class Players extends BaseController
             return redirect()->to('/players');
         }
 
+        $rawGames = $this->gameModel->getGames($id);
+        $games = array();
+        foreach ($rawGames as $rawGame) {
+            if ($rawGame['player1_id'] == $id) {
+                $result = $rawGame['result'];
+            } elseif ($rawGame['result'] == "1-0") {
+                $result = "0-1";
+            } elseif ($rawGame['result'] == "0-1") {
+                $result = "1-0";
+            } else {
+                $result = "TIE";
+            }
+            if ($result == "1-0") {
+                $rowClass = "table-success";
+            } elseif ($result == "0-1") {
+                $rowClass = "table-danger";
+            } else {
+                $rowClass = "table-warning";
+            }
+            $games[] = array(
+                'opponent'          => ($id == $rawGame['player1_id']) ? $rawGame['player2_name'] : $rawGame['player1_name'],
+                'result'            => $result,
+                'player_army'       => ($id == $rawGame['player1_id']) ? $rawGame['player1_army'] : $rawGame['player2_army'],
+                'opponent_army'     => ($id == $rawGame['player1_id']) ? $rawGame['player2_army'] : $rawGame['player1_army'],
+                'type'              => $rawGame['type'],
+                'size'              => $rawGame['size'],
+                'title'             => $rawGame['title'],
+                'id'                => $rawGame['id'],
+                'rowClass'          => $rowClass,
+            );
+        }
+
         $this->setData('player', $player);
+        $this->setData('games', $games);
         $this->setTitle($player['display_name']);
         return $this->loadView('player_view');
     }

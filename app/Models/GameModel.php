@@ -40,12 +40,15 @@ class GameModel extends Model {
 		'player2_army_id',
 	];
 
-	public function getGames() {
+	public function getGames($playerId = '') {
 		$query = $this->db->table('game')->orderBy('date', 'DESC')
 			->select('game.*, p1.display_name AS player1_name, p2.display_name AS player2_name, p1a.name AS player1_army, p2a.name AS player2_army, game_type.name AS type, game_size.name AS size')
 			->join('user p1', 'game.player1_id = p1.id')->join('user p2', 'game.player2_id = p2.id')
 			->join('army p1a', 'game.player1_army_id = p1a.id', 'LEFT')->join('army p2a', 'game.player2_army_id = p2a.id', 'LEFT')
 			->join('game_type', 'game.game_type_id = game_type.id', 'LEFT')->join('game_size', 'game.game_size_id = game_size.id', 'LEFT');
+		if ($playerId != '') {
+			$query->where('player1_id', $playerId)->orWhere('player2_id', $playerId);
+		}
 		return $query->get()->getResultArray();
 	}
 

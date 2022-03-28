@@ -47,7 +47,24 @@
         </tr>
     <?php endif; ?>
 </table>
-<a href="<?= base_url('/players') ?>" class="btn btn-outline-secondary float-right">Volver a Jugadores</a>
+<h3 align="center">Partidas</h3>
+<table class="table">
+    <tr>
+        <th>Partida</th>
+        <th>Ejército</th>
+        <th></th>
+        <th>Oponente</th>
+    </tr>
+    <?php foreach ($games as $game) : ?>
+        <tr class="<?= $game['rowClass'] ?>">
+            <td><a href="<?= base_url('/games/view/' . $game['id']) ?>" ><?= $game['title'] ?></a> <small class="text-muted"><?= $game['type'] ?><?= ($game['type'] && $game['size']) ? ' - ' : '' ?><?= $game['size'] ?></small></td>
+            <td><?= isset($game['player_army']) ? $game['player_army'] : '<div class="text-muted">Sin definir</div>' ?></td>
+            <td><?= $game['result'] == "TIE" ? "&half;-&half;" : $game['result'] ?></td>
+            <td><?= $game['opponent'] ?> <small class="text-muted"><?= $game['opponent_army'] ?></small></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<a href="<?= base_url('/players') ?>" class="btn btn-outline-secondary float-right mb-3">Volver a Jugadores</a>
 
 <?php if ($player['id'] == session('id')) : ?>
 
