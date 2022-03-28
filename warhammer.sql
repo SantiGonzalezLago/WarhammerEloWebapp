@@ -123,7 +123,7 @@ CREATE TABLE `game_type` (
 DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
   `key` varchar(20) NOT NULL,
-  `value` varchar(20) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
