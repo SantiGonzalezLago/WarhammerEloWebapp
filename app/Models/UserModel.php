@@ -41,12 +41,12 @@ class UserModel extends Model {
 		$settingModel = new SettingModel();
 		$baseElo = $settingModel->getSettingValue('base_elo');
 
-		$subquery = "(SELECT IF(`warhammer`.`game`.`player1_id` = `u`.`id`, `warhammer`.`game`.`player1_elo_after`, `warhammer`.`game`.`player2_elo_after`) AS `elo` FROM `warhammer`.`game` WHERE (`warhammer`.`game`.`player1_id` = `u`.`id` OR `warhammer`.`game`.`player2_id` = `u`.`id`) AND `warhammer`.`game`.`result` IS NOT NULL ORDER BY `warhammer`.`game`.`date` DESC LIMIT 1)";
+		$subquery = "(SELECT IF(`game`.`player1_id` = `u`.`id`, `game`.`player1_elo_after`, `game`.`player2_elo_after`) AS `elo` FROM `game` WHERE (`game`.`player1_id` = `u`.`id` OR `game`.`player2_id` = `u`.`id`) AND `game`.`result` IS NOT NULL ORDER BY `game`.`date` DESC LIMIT 1)";
 		$query = "SELECT
 				`u`.*,
 				COALESCE($subquery, $baseElo) AS `elo`
 			FROM
-				`warhammer`.`user` `u`
+				`user` `u`
 			WHERE
 				`u`.`active` = 1
 			ORDER BY elo DESC";
@@ -58,12 +58,12 @@ class UserModel extends Model {
 		$settingModel = new SettingModel();
 		$baseElo = $settingModel->getSettingValue('base_elo');
 
-		$subquery = "(SELECT IF(`warhammer`.`game`.`player1_id` = `u`.`id`, `warhammer`.`game`.`player1_elo_after`, `warhammer`.`game`.`player2_elo_after`) AS `elo` FROM `warhammer`.`game` WHERE (`warhammer`.`game`.`player1_id` = `u`.`id` OR `warhammer`.`game`.`player2_id` = `u`.`id`) AND `warhammer`.`game`.`result` IS NOT NULL ORDER BY `warhammer`.`game`.`date` DESC LIMIT 1)";
+		$subquery = "(SELECT IF(`game`.`player1_id` = `u`.`id`, `game`.`player1_elo_after`, `game`.`player2_elo_after`) AS `elo` FROM `game` WHERE (`game`.`player1_id` = `u`.`id` OR `game`.`player2_id` = `u`.`id`) AND `game`.`result` IS NOT NULL ORDER BY `game`.`date` DESC LIMIT 1)";
 		$query = "SELECT
 				`u`.*,
 				COALESCE($subquery, $baseElo) AS `elo`
 			FROM
-				`warhammer`.`user` `u`
+				`user` `u`
 			WHERE
 				`u`.`active` = 1 AND `u`.`id` = $id
 			ORDER BY elo DESC";
