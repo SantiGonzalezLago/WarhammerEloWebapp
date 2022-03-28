@@ -40,10 +40,10 @@
                             <label for="<?= $setting['key'] ?>"><?= $setting['key'] ?></label>
                         </th>
                         <td>
-                            <?php if ($setting['type'] != "checkbox") : ?>
-                                <input type="<?= $setting['type'] ?>" name="<?= $setting['key'] ?>" id="<?= $setting['key'] ?>" value="<?= $setting['value'] ?>" class="form-control">
-                            <?php else: ?>
+                            <?php if ($setting['type'] == "checkbox") : ?>
                                 <input type="checkbox" name="<?= $setting['key'] ?>" id="<?= $setting['key'] ?>" value="1" <?= $setting['value'] ? "checked" : "" ?> >
+                            <?php else: ?>
+                                <input autocomplete="off" type="<?= $setting['type'] ?>" name="<?= $setting['key'] ?>" id="<?= $setting['key'] ?>" value="<?= $setting['value'] ?>" class="form-control">
                             <?php endif; ?>
                         </td>
                     </tr>
